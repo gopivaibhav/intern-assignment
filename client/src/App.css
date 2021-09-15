@@ -1,0 +1,40 @@
+
+
+.Pictures {
+  display: flex;
+  justify-content: space-around;
+  margin: 20px;
+  padding: 10px;
+  border: 2px solid grey;
+
+}
+.Pictures span{
+  padding: 10px;
+  background-color: mediumvioletred;
+  font-size: 30px;
+  border: 2px solid black;
+  color: white;
+}
+
+.Board {
+  
+  height: 200px;
+  border: 2px solid black;
+  margin: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.Board span{
+  padding: 18px;
+  font-size: 30px;
+  margin: 2px;
+  background-color:rgb(94, 107, 231);
+  color: white;
+  border: 2px solid black;
+}
+
+.Pictures span:hover{
+  cursor: pointer;
+  transform: scale(1.01);
+}

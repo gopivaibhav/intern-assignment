@@ -1,118 +1,141 @@
 import React, { useState } from "react";
 import Picture from "./Picture";
 import { useDrop } from "react-dnd";
+import Integer from "./Integer";
+import Symbol from "./Symbol";
 import "../App.css";
 
 const PictureList = [
   {
     id: 1,
-    value:'A'
+    value: 'A'
   },
   {
     id: 2,
-    value:'B'
+    value: 'B'
   },
   {
     id: 3,
-    value:'C'
+    value: 'C'
   },
   {
     id: 4,
-    value:'D'
+    value: 'D'
   },
   {
     id: 5,
-    value:'E'
+    value: 'E'
   },
   {
     id: 6,
-    value:'F'
+    value: 'F'
   },
   {
     id: 7,
-    value:'G'
+    value: 'G'
   },
   {
     id: 8,
-    value:'H'
+    value: 'H'
   },
   {
     id: 9,
-    value:'I'
+    value: 'I'
   },
   {
     id: 10,
-    value:'J'
+    value: 'J'
   },
   {
     id: 11,
-    value:'K'
+    value: 'K'
   },
   {
     id: 12,
-    value:'L'
+    value: 'L'
   },
   {
     id: 13,
-    value:'M'
+    value: 'M'
   },
   {
     id: 14,
-    value:'N'
+    value: 'N'
   },
   {
     id: 15,
-    value:'O'
+    value: 'O'
   },
   {
     id: 16,
-    value:'P'
+    value: 'P'
   },
   {
     id: 17,
-    value:'Q'
+    value: 'Q'
   },
   {
     id: 18,
-    value:'R'
+    value: 'R'
   },
   {
     id: 19,
-    value:'S'
+    value: 'S'
   },
   {
     id: 20,
-    value:'T'
+    value: 'T'
   },
   {
     id: 21,
-    value:'U'
+    value: 'U'
   },
   {
     id: 22,
-    value:'V'
+    value: 'V'
   },
   {
     id: 23,
-    value:'W'
+    value: 'W'
   },
   {
     id: 24,
-    value:'X'
+    value: 'X'
   },
   {
     id: 25,
-    value:'Y'
+    value: 'Y'
   },
   {
     id: 26,
-    value:'Z'
+    value: 'Z'
   },
-  
+];
+const SymbolList = [
+  {
+    id: 1,
+    value: ">"
+  },
+  {
+    id: 2,
+    value: "<"
+  },
+  {
+    id: 3,
+    value: "="
+  },
+];
+const IntegerList = [
+  {
+    id: 1,
+    value: "Integer"
+  }
 ];
 
 function DragDrop() {
   const [board, setBoard] = useState([]);
+  const [sym, setSym] = useState([]);
+  const [numb, setNum] = useState([]);
 
   const [{ isOver }, drop] = useDrop(() => ({
     accept: "image",
@@ -121,7 +144,29 @@ function DragDrop() {
       isOver: !!monitor.isOver(),
     }),
   }));
+  const [{ isHua }, symdrop] = useDrop(() => ({
+    accept: "symbol",
+    drop: (item) => addSym(item.id),
+    collect: (monitor) => ({
+      isOver: !!monitor.isOver(),
+    }),
+  }));
+  const [{ isDone }, intdrop] = useDrop(() => ({
+    accept: "integer",
+    drop: (item) => addInt(item.id),
+    collect: (monitor) => ({
+      isOver: !!monitor.isOver(),
+    }),
+  }));
 
+  const addInt = (id) => {
+    const pictureList = IntegerList.filter((i) => id === i.id);
+    setNum((numb) => [...numb, pictureList[0]]);
+  };
+  const addSym = (id) => {
+    const pictureList = SymbolList.filter((i) => id === i.id);
+    setSym((sym) => [...sym, pictureList[0]]);
+  };
   const addImageToBoard = (id) => {
     const pictureList = PictureList.filter((i) => id === i.id);
     setBoard((board) => [...board, pictureList[0]]);
@@ -133,10 +178,37 @@ function DragDrop() {
           return <Picture value={i.value} id={i.id} />;
         })}
       </div>
-      <div className="Board" ref={drop}>
-        {board.map((i) => {
-          return <Picture value={i.value} id={i.id} />;
-        })}
+      <div className="container">
+        <div className="Symbol">
+          {SymbolList.map((i) => {
+            return <Symbol value={i.value} id={i.id} />;
+          })}
+        </div>
+        <div className="Integer">
+          {IntegerList.map((i) => {
+            return <Integer value={i.value} id={i.id} />;
+          })}
+        </div>
+
+      </div>
+      <div className="title">Form (Select one from each box)</div>
+      <div className="container">
+
+        <div className="Board" ref={drop}>
+          {board.map((i) => {
+            return <Picture value={i.value} id={i.id} />;
+          })}
+        </div>
+        <div className="Board" ref={symdrop}>
+          {sym.map((i) => {
+            return <Picture value={i.value} id={i.id} />;
+          })}
+        </div>
+        <div className="Board" id="intcon" ref={intdrop} id="check">
+          {numb.map((i) => {
+            return <Picture value={i.value} id={i.id} />;
+          })}
+        </div>
       </div>
     </>
   );

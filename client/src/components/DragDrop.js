@@ -175,18 +175,18 @@ function DragDrop() {
     <>
       <div className="Pictures">
         {PictureList.map((i) => {
-          return <Picture value={i.value} id={i.id} />;
+          return <Picture value={i.value} id={i.id} see={false}/>;
         })}
       </div>
       <div className="container">
         <div className="Symbol">
           {SymbolList.map((i) => {
-            return <Symbol value={i.value} id={i.id} />;
+            return <Symbol value={i.value} id={i.id} see={false}/>;
           })}
         </div>
         <div className="Integer">
           {IntegerList.map((i) => {
-            return <Integer value={i.value} id={i.id} />;
+            return <Integer value={i.value} id={i.id} see={false}/>;
           })}
         </div>
 
@@ -196,17 +196,17 @@ function DragDrop() {
 
         <div className="Board" ref={drop}>
           {board.map((i) => {
-            return <Picture value={i.value} id={i.id} />;
+            return <Picture value={i.value} id={i.id} setBoard={setBoard} arr={board} see={true}/>;
           })}
         </div>
         <div className="Board" ref={symdrop}>
           {sym.map((i) => {
-            return <Picture value={i.value} id={i.id} />;
+            return <Symbol value={i.value} id={i.id} setSym={setSym} arr={sym} see={true}/>;
           })}
         </div>
         <div className="Board" id="intcon" ref={intdrop} id="check">
           {numb.map((i) => {
-            return <Picture value={i.value} id={i.id} />;
+            return <Integer value={i.value} id={i.id} setNum={setNum} arr={numb} see={true}/>;
           })}
         </div>
       </div>

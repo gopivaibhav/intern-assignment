@@ -66,7 +66,20 @@
   margin: 2px;
   background-color:rgb(94, 107, 231);
   color: white;
+  position: relative;
   border: 2px solid black;
+}
+
+.Board span span{
+  padding: 0px;
+  background-color: transparent;
+  color: red;
+  border: 0px;
+  top: -15px;
+  right: -4px;
+  position: absolute;
+  z-index: 5;
+  cursor: pointer;
 }
 
 .Pictures span:hover{

@@ -4,6 +4,7 @@ import { useDrop } from "react-dnd";
 import Integer from "./Integer";
 import Symbol from "./Symbol";
 import "../App.css";
+const axios = require('axios')
 
 const PictureList = [
   {
@@ -136,6 +137,8 @@ function DragDrop() {
   const [board, setBoard] = useState([]);
   const [sym, setSym] = useState([]);
   const [numb, setNum] = useState([]);
+  const [number, setNumber] = useState('Integer');
+  const [arr, setArr] = useState([]);
 
   const [{ isOver }, drop] = useDrop(() => ({
     accept: "image",
@@ -171,6 +174,13 @@ function DragDrop() {
     const pictureList = PictureList.filter((i) => id === i.id);
     setBoard((board) => [...board, pictureList[0]]);
   };
+  function formSubmit(){
+    if(sym.length>0 && board.length>0 && numb.length>0){
+
+      axios.post('https://bgvbackend.herokuapp.com/main/search', { alp: board[0].value, symb: sym[0].value,num:number })
+      .then((res) => {setArr(res.data)})
+    }
+  }
   return (
     <>
       <div className="Pictures">
@@ -186,7 +196,7 @@ function DragDrop() {
         </div>
         <div className="Integer">
           {IntegerList.map((i) => {
-            return <Integer value={i.value} id={i.id} see={false}/>;
+            return <Integer value={i.value} id={i.id} see={false} number={'Integer'}/>;
           })}
         </div>
 
@@ -206,10 +216,17 @@ function DragDrop() {
         </div>
         <div className="Board" id="intcon" ref={intdrop} id="check">
           {numb.map((i) => {
-            return <Integer value={i.value} id={i.id} setNum={setNum} arr={numb} see={true}/>;
+            return <Integer value={i.value} id={i.id} setNum={setNum} arr={numb} see={true} setNumber={setNumber} number={number}/>;
           })}
         </div>
       </div>
+      <button onClick={formSubmit}>Submit</button>
+          <br></br>
+      {arr && <>
+              {arr.map((i)=>(
+                <p className="result">{i.alpha} - {i.cost}</p>
+              ))}
+          </>}
     </>
   );
 }
